@@ -53,6 +53,16 @@ Update the relevant context file whenever implementation changes:
 
 Progress state must reflect the actual state of the implementation, not the intended state.
 
+## Progress Tracker Maintenance
+
+When completing a feature unit, follow this strict formatting for `progress-tracker.md`:
+
+- **Grouping:** Group items in the `Completed` section by feature (e.g., `### Feature 01: [Name]`).
+- **Current Phase:** Update to the next feature (e.g., `Feature 03: TBD`).
+- **Current Goal:** Define the immediate implementation goal or use a placeholder if TBD.
+- **In Progress:** Set to `None` if no immediate tasks are active for the new phase.
+- **Next Up:** Set to the next feature or unit of work.
+
 ## Before Moving To The Next Unit
 
 1. The current unit works end to end within its defined scope.

@@ -4,27 +4,33 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Design System Implementation
+- Feature 03: TBD
 
 ## Current Goal
 
-- Implement UI primitive components and theme configuration.
+- Define the immediate implementation goal here.
 
 ## Completed
 
+### Feature 01: Design System
 - [x] shadcn/ui initialization with Tailwind v4.
 - [x] Primitive components: Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea.
 - [x] Theme configuration in `globals.css` (Dark only).
 - [x] `lib/utils.ts` with `cn()` helper.
 - [x] `lucide-react` integration.
 
+### Feature 02: Editor Chrome
+- [x] Editor Navbar with sidebar toggle.
+- [x] Project Sidebar with tabs and placeholder state.
+- [x] Base layout components implemented and verified.
+
 ## In Progress
 
-- [ ] Project list and workspace navigation.
+- None.
 
 ## Next Up
 
-- Project list and workspace navigation.
+- Feature 03: TBD.
 
 ## Open Questions
 
