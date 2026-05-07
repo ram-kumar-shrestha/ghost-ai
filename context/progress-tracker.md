@@ -4,23 +4,27 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Not started
+- Design System Implementation
 
 ## Current Goal
 
-- Define the immediate implementation goal here.
+- Implement UI primitive components and theme configuration.
 
 ## Completed
 
-- None yet.
+- [x] shadcn/ui initialization with Tailwind v4.
+- [x] Primitive components: Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea.
+- [x] Theme configuration in `globals.css` (Dark only).
+- [x] `lib/utils.ts` with `cn()` helper.
+- [x] `lucide-react` integration.
 
 ## In Progress
 
-- None yet.
+- [ ] Project list and workspace navigation.
 
 ## Next Up
 
-- Add the next planned feature unit here.
+- Project list and workspace navigation.
 
 ## Open Questions
 
@@ -32,4 +36,6 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Session Notes
 
-- Add context needed to resume work in the next session.
+- Resolved "Error evaluating Node.js code" in `globals.css` by removing `@apply dark`.
+- Restored `@custom-variant dark (&:is(.dark *));` to maintain shadcn/ui compatibility with Tailwind v4.
+- Verified fix with a successful `npm run build`.
