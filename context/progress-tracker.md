@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 05: TBD
+- Feature 06: TBD
 
 ## Current Goal
 
-- Define the immediate implementation goal for Feature 05.
+- Define the immediate implementation goal for Feature 06.
 
 ## Completed
 
@@ -42,13 +42,23 @@ Update this file whenever the current phase, active feature, or implementation s
 - [x] Sidebar create action and editor home create action open the shared Create Project dialog.
 - [x] Mobile sidebar backdrop scrim closes the sidebar when tapped.
 
+### Feature 05: Prisma
+- [x] Added `ProjectStatus`, `Project`, and `ProjectCollaborator` Prisma models.
+- [x] Added owner, status, canvas blob reference, timestamp, relation, unique constraint, cascade delete, and requested indexes.
+- [x] Added cached Prisma client singleton in `lib/prisma.ts`.
+- [x] Prisma client branches by `DATABASE_URL`: `prisma+postgres://` uses Accelerate URL configuration; other URLs use direct `@prisma/adapter-pg`.
+- [x] Created and applied first project models migration.
+- [x] Generated Prisma Client into `app/generated/prisma`.
+- [x] Set explicit Next Turbopack root to keep builds scoped to this repository.
+- [x] Verified with `npm run lint` and `npm run build`.
+
 ## In Progress
 
 - None.
 
 ## Next Up
 
-- Feature 05: TBD.
+- Feature 06: TBD.
 
 ## Open Questions
 
@@ -56,10 +66,17 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Architecture Decisions
 
-- Add decisions that affect the system design or data model.
+- Project metadata starts with `Project` and `ProjectCollaborator`; collaborators are deleted when their project is deleted.
+- Prisma runtime access is centralized through `lib/prisma.ts`, with development hot-reload caching on `globalThis`.
+- Direct Postgres URLs use `@prisma/adapter-pg`; `prisma+postgres://` URLs use Prisma Client `accelerateUrl`.
 
 ## Session Notes
 
+- Completed Feature 05 Prisma foundation from `context/feature-specs/05-prisma.md`.
+- Added runtime dependencies required by the spec: `@prisma/client`, `@prisma/adapter-pg`, and `pg`.
+- Created and applied migration `20260508082122_add_project_models`.
+- Added `next.config.ts` `turbopack.root` because Next inferred `C:\Users\manga` from a parent lockfile and hit an access-denied build panic.
+- Verified the feature with successful `npm run lint` and `npm run build`; build required network access for Google Fonts.
 - Implemented Feature 04 project dialogs/sidebar actions with mock in-memory project data only.
 - Added owner-only sidebar actions while keeping shared/collaborator projects action-free.
 - Refined Feature 04 slug preview copy so dialogs show the slug directly without a label.
