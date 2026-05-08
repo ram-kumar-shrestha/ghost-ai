@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { Pencil, Plus, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProjectDialogsContext } from "@/components/editor/project-dialogs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import type { ProjectSummary } from "@/lib/hooks/useProjectDialogs";
+import type { EditorProjectSummary } from "@/lib/projects";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
@@ -96,10 +97,10 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
 }
 
 interface ProjectListProps {
-  projects: ProjectSummary[];
+  projects: EditorProjectSummary[];
   emptyMessage: string;
-  onRename?: (project: ProjectSummary) => void;
-  onDelete?: (project: ProjectSummary) => void;
+  onRename?: (project: EditorProjectSummary) => void;
+  onDelete?: (project: EditorProjectSummary) => void;
 }
 
 function ProjectList({
@@ -123,15 +124,15 @@ function ProjectList({
           key={project.id}
           className="group flex min-h-16 items-center gap-2 rounded-xl border border-border bg-bg-elevated px-3 py-2"
         >
-          <div className="min-w-0 flex-1">
+          <Link href={`/editor/${project.id}`} className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-text-primary">
               {project.name}
             </p>
             <p className="truncate font-mono text-xs text-text-muted">
-              {project.slug}
+              {project.roomId}
             </p>
             <p className="mt-1 text-xs text-text-faint">{project.updatedAt}</p>
-          </div>
+          </Link>
 
           {project.access === "owner" && onRename && onDelete ? (
             <div className="flex shrink-0 items-center gap-1 opacity-100 md:opacity-0 md:transition-opacity md:group-hover:opacity-100 md:group-focus-within:opacity-100">

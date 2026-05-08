@@ -1,14 +1,8 @@
-"use client";
-
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useProjectDialogsContext } from "@/components/editor/project-dialogs";
+import { NewProjectButton } from "@/components/editor/new-project-button";
 
 export default function Editor() {
-  const { openCreateDialog } = useProjectDialogsContext();
-
   return (
-    <main className="flex min-h-0 flex-1 bg-background">
+    <main className="flex min-h-0 flex-1 bg-bg-base">
       <section className="flex flex-1 items-center justify-center bg-bg-base px-6">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-semibold text-text-primary">
@@ -18,10 +12,7 @@ export default function Editor() {
             Start a new architecture workspace, or choose a project from the
             sidebar.
           </p>
-          <Button className="mt-6" onClick={openCreateDialog}>
-            <Plus className="h-4 w-4" />
-            New Project
-          </Button>
+          <NewProjectButton />
         </div>
       </section>
     </main>

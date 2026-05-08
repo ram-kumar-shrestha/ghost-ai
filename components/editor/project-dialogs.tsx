@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useProjectDialogs } from "@/lib/hooks/useProjectDialogs";
+import { useProjectActions } from "@/hooks/useProjectActions";
+import type { EditorProjectLists } from "@/lib/projects";
 
-type ProjectDialogsValue = ReturnType<typeof useProjectDialogs>;
+type ProjectDialogsValue = ReturnType<typeof useProjectActions>;
 
 const ProjectDialogsContext = createContext<ProjectDialogsValue | null>(null);
 
@@ -35,8 +36,16 @@ export function useProjectDialogsContext() {
   return context;
 }
 
-export function ProjectDialogsProvider({ children }: { children: ReactNode }) {
-  const dialogs = useProjectDialogs();
+interface ProjectDialogsProviderProps extends EditorProjectLists {
+  children: ReactNode;
+}
+
+export function ProjectDialogsProvider({
+  children,
+  ownedProjects,
+  sharedProjects,
+}: ProjectDialogsProviderProps) {
+  const dialogs = useProjectActions({ ownedProjects, sharedProjects });
 
   return (
     <ProjectDialogsContext.Provider value={dialogs}>
@@ -62,7 +71,7 @@ function ProjectDialogs() {
     ? "Name the architecture workspace you want to start."
     : isRenameDialog
       ? `Current project: ${projectName ?? ""}`
-      : `Delete ${projectName ?? "this project"}? This mock action cannot be undone in the current session.`;
+      : `Delete ${projectName ?? "this project"}? This action cannot be undone.`;
 
   function handleProjectFormSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,6 +121,11 @@ function ProjectDialogs() {
               <DialogDescription className="text-text-muted">
                 {dialogDescription}
               </DialogDescription>
+              {dialogs.errorMessage ? (
+                <p className="text-sm text-destructive">
+                  {dialogs.errorMessage}
+                </p>
+              ) : null}
             </DialogHeader>
 
             <DialogFooter className="-mx-6 -mb-6 rounded-b-3xl border-border bg-bg-elevated px-6">
@@ -159,8 +173,13 @@ function ProjectDialogs() {
                 autoFocus
               />
               <p className="font-mono text-xs text-accent-primary">
-                {dialogs.slugPreview}
+                {dialogs.roomIdPreview}
               </p>
+              {dialogs.errorMessage ? (
+                <p className="text-sm text-destructive">
+                  {dialogs.errorMessage}
+                </p>
+              ) : null}
             </div>
 
             <DialogFooter className="-mx-6 -mb-6 rounded-b-3xl border-border bg-bg-elevated px-6">
