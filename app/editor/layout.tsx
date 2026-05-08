@@ -1,30 +1,18 @@
-"use client";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { EditorShell } from "@/components/editor/editor-shell";
+import { getEditorProjectLists } from "@/lib/projects";
 
-import { useState } from "react";
-import { EditorNavbar } from "@/components/editor/editor-navbar";
-import { ProjectDialogsProvider } from "@/components/editor/project-dialogs";
-import { ProjectSidebar } from "@/components/editor/project-sidebar";
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { userId } = await auth();
+  const user = userId ? await currentUser() : null;
+  const email = user?.primaryEmailAddress?.emailAddress ?? null;
+  const projectLists = userId
+    ? await getEditorProjectLists({ userId, email })
+    : { ownedProjects: [], sharedProjects: [] };
 
-  return (
-    <ProjectDialogsProvider>
-      <EditorNavbar
-        isSidebarOpen={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen((p) => !p)}
-      />
-
-      <ProjectSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
-      {children}
-    </ProjectDialogsProvider>
-  );
+  return <EditorShell {...projectLists}>{children}</EditorShell>;
 }
