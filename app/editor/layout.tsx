@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { EditorNavbar } from "@/components/editor/editor-navbar";
+import { ProjectDialogsProvider } from "@/components/editor/project-dialogs";
 import { ProjectSidebar } from "@/components/editor/project-sidebar";
 
 export default function RootLayout({
@@ -12,7 +13,7 @@ export default function RootLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <>
+    <ProjectDialogsProvider>
       <EditorNavbar
         isSidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen((p) => !p)}
@@ -24,6 +25,6 @@ export default function RootLayout({
       />
 
       {children}
-    </>
+    </ProjectDialogsProvider>
   );
 }
